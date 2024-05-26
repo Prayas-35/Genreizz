@@ -5,7 +5,7 @@
 
 {% block main %}
 
-{% if length == 0 %}
+{% if books|length == 0 %}
 <h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">Add Books To Your Library To Get Remmendations</h1>
 {% else %}
 
@@ -75,7 +75,6 @@
     </div>
 </div>
 {% endif %}
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/static/dashboard.js"></script>

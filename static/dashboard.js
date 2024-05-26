@@ -47,6 +47,7 @@ $(document).ready(function () {
             success: function (response) {
                 alert.text(response.message);
                 alert.show();
+                alert.css('color', 'green');
                 setTimeout(() => {
                     alert.hide();
                 }, 3000);
@@ -54,6 +55,7 @@ $(document).ready(function () {
             error: function () {
                 alert.text('An error occurred while adding the book.');
                 alert.show();
+                alert.css('color', 'red');
                 setTimeout(() => {
                     alert.hide();
                 }, 3000);
