@@ -7,7 +7,7 @@
 
 {% if books|length == 0 %}
 
-<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">You Have No Books In Your Library</h1>
+<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">You Have No Books In Your Readlist</h1>
 
 {% else %}
 
@@ -29,7 +29,7 @@
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
         <td>
-            <form action="/delete/{{ book.id }}" method="post">
+            <form action="/delete_readlist/{{ book.id }}" method="post">
                 <button type="submit" class="btn btn-danger">Remove</button>
             </form>
         </td>
