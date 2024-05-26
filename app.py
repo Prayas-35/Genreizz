@@ -88,11 +88,19 @@ def dashboard():
     genres = []
     for book in user_books:
         genres.append(book['genre'])
-    # genres = books[0]['genre']
-    books = get_book_by_genre(list(set(genres)))
+    unique_genres = list(set(genres))
+    books = get_book_by_genre(unique_genres)
     random.shuffle(books)
-    # return books
-    return render_template('dashboard.html', books=books, length=len(books))
+    
+    unique_books = []
+    seen_ids = set()
+    for book in books:
+        if book['id'] not in seen_ids:
+            unique_books.append(book)
+            seen_ids.add(book['id'])
+
+    # return unique_books
+    return render_template('dashboard.html', books=unique_books, length=len(books))
 
 @app.route('/mybooks')
 @login_required
