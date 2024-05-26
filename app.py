@@ -153,11 +153,17 @@ def add_book_readlist():
         print(e)
         return jsonify({"success": False, "error": str(e)}), 500
 
-@app.route('/delete/<int:id>')
+@app.route('/delete/<int:id>', methods=["POST"])
 @login_required
 def delete_book(id):
     db.execute("DELETE FROM books WHERE id = ?", id)
     return redirect('/mybooks')
+
+@app.route('/delete_readlist/<int:id>', methods=["POST"])
+@login_required
+def delete_read(id):
+    db.execute("DELETE FROM readlist WHERE id = ?", id)
+    return redirect('/readlist')
 
 @app.route('/bestsellers')
 @login_required
