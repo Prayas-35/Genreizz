@@ -106,10 +106,10 @@ def mybooks():
 def search():
     if request.method == "POST":
         query = request.form.get("query")
-        books, length = search_books(query)
+        books = search_books(query)
+
+        # return books
         return render_template('search.html', books = books)
-    
-    return render_template('search.html')
 
 @app.route('/add', methods=["POST"])
 @login_required

@@ -104,12 +104,13 @@ def get_book_by_isbn(isbn):
 
 def search_books(query):
     """this function takes a query as an argument and returns a list of books that match the query."""
-
-    url = f"https://www.googleapis.com/books/v1/volumes?q={query}&maxResults=5&printType=books"
+    results = random.randint(10, 20)
+    url = f"https://www.googleapis.com/books/v1/volumes?q={query}&maxResults={results if results%2 == 0 else results+1}&printType=books"
 
     response = requests.get(url)
 
     if response.status_code == 200:
+        print('here1')
         data = response.json()
         books = []
         if 'items' in data:
@@ -117,14 +118,17 @@ def search_books(query):
                 volume_info = item['volumeInfo']
                 book = {}
 
+                book['message'] = None
+                book['code'] = 200
                 title = volume_info['title']
                 book['title'] = title
                 isbn = volume_info.get('industryIdentifiers', [])
                 id = item['id']
                 book['id'] = id
-                book['image'] = get_image_by_id(id)
+                book['image'] = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+                book['genre'] = volume_info.get('categories', [])
 
-                authors = volume_info.get('authors')
+                authors = volume_info.get('authors') if 'authors' in volume_info else []
                 book['authors'] = authors
 
                 if isbn:
@@ -136,8 +140,25 @@ def search_books(query):
                 
                 books.append(book)
 
-        length = len(books)
-        return books, length
+        return books
+    
+    elif response.status_code == 400:
+        print('here')
+        data = response.json()
+        books = []
+        book = {}
+        book['message'] = "Missing Book Name"
+        book['code'] = data['error']['code']
+        book['title'] = None
+        book['authors'] = None
+        book['genre'] = None
+        book['isbn'] = None
+        book['image'] = None
+        book['id'] = None
+        books.append(book)
+
+        return books
+
     else:
         return f"Error: {response.status_code}"
 
