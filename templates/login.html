@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}: Log In
+{% endblock %}
+
+{% block main %}
+<div class="card text-center mb-3 position-absolute top-50 start-50 translate-middle shadow" id="login">
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <h2>Login</h2>
+        <br>
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username"
+                    placeholder="Username" type="text" required>
+            </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password"
+                    type="password" required>
+            </div>
+            <button class="btn btn-primary mt-2" id="loginbtn" type="submit">Log In</button>
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

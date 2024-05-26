@@ -1,0 +1,152 @@
+@font-face {
+    font-family: 'Eastwood';
+    src: url("/static/Eastwood.woff2");
+    /* font-weight: normal;
+    font-style: normal; */
+}
+
+@font-face {
+    font-family: 'PinkChicken';
+    src: url("/static/PinkChicken-Regular.ttf");
+    font-weight: 500;
+    font-style: normal;
+}
+
+#customh1 {
+    font-family: Eastwood;
+    letter-spacing: 1px;
+    font-size: 3rem;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    margin-right: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: #bdc3c7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #DAA520;
+    border-radius: 10px;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f3bd1c;
+}
+
+::-webkit-scrollbar-button:single-button {
+    background: #e0e0e0;
+    border: none;
+    display: block;
+    height: 8px;
+    width: 8px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Up arrow */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="12" width="12"><polygon points="6,2 2,8 10,8" fill="black"/></svg>');
+}
+
+/* Down arrow */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="12" width="12"><polygon points="2,4 10,4 6,10" fill="black"/></svg>');
+}
+
+/* Left arrow */
+::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="12" width="12"><polygon points="8,2 2,6 8,10" fill="black"/></svg>');
+}
+
+/* Right arrow */
+::-webkit-scrollbar-button:single-button:horizontal:increment {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="12" width="12"><polygon points="4,2 10,6 4,10" fill="black"/></svg>');
+}
+
+#login {
+    width: 18rem;
+    min-height: fit-content;
+    border: 2px solid #DAA520;
+    background-color: transparent;
+    height: 20rem;
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        border-radius: 5px;
+        background-color: transparent;
+        /* color: #DAA520; */
+    }
+}
+
+#login h2 {
+    font-family: Eastwood;
+    font-size: 2.5rem;
+}
+
+#loginbtn {
+    font-family: PinkChicken;
+    background-color: #f3bd1c;
+    color: #000;
+    border: none;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+#loginbtn:hover {
+    background-color: #DAA520;
+}
+
+#signup {
+    width: 20rem;
+    min-height: fit-content;
+    border: 2px solid #DAA520;
+    background-color: transparent;
+    height: 26rem;
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 13rem;
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        border-radius: 5px;
+        background-color: transparent;
+    }
+}
+
+#search {
+    min-height: fit-content;
+    border: 2px solid #DAA520;
+    background-color: transparent;
+
+    input[type="text"] {
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        border-radius: 5px;
+        background-color: transparent;
+    }
+}
+
+#searchbtn {
+    font-family: PinkChicken;
+    border: 2px solid #DAA520;
+    color: black;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+#searchbtn:hover {
+    background-color: #DAA520;
+    color: whitesmoke;
+}
+
+.logged-in {
+    margin-top: 80px;
+}

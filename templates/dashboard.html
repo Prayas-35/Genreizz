@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}: Home
+{% endblock %}
+
+{% block main %}
+
+{% if length == 0 %}
+<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">Add Books To Your Library To Get Remmendations</h1>
+{% else %}
+
+<h1 class="mb-5" id="customh1">Recommended Books</h1>
+<!-- <img src="static/no_img.jpg" class="img-fluid" alt="static/no_img.jpg"> -->
+<!-- <p class="alert alert-primary text-center" role="alert" id="alert" style="margin-bottom: 20px; display: none;"></p> -->
+<div class="container">
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-6 mb-3">
+            <div class="card shadow rounded mb-3 ps-0"
+                style="height: 11.5rem; background-color: transparent; max-height: max-content;">
+                <div class="row g-0" style="height: 100%;">
+                    <div class="col-md-4 pe-5" style="height: 100%; width: fit-content;">
+                        <img src="{{ book.image }}" class="img-fluid rounded-start" style="height: 100%;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">Author: {% if book.authors|length == 0 %}Unknown{% else %}{{
+                                book.authors[0] }}{% endif %}</p>
+                            <div class="d-flex" style="margin-top: 20px; margin-left: 50px;">
+                                <form class="add-book-form me-3" data-type="library">
+                                    <input type="hidden" name="title" value="{{ book.title }}">
+                                    <input type="hidden" name="author"
+                                        value="{% if book.authors|length == 0 %}Unknown{% else %}{{ book.authors[0] }}{% endif %}">
+                                    <input type="hidden" name="isbn" value="{{ book.isbn }}">
+                                    <input type="hidden" name="genre" value="{{ book.genre[0] }}">
+                                    <input type="hidden" name="image" value="{{ book.image }}">
+                                    <button type="submit" class="btn btn-success"
+                                        style="align-items: center; align-content: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"
+                                            style="transform: translateY(-2px);">
+                                            <path fill-rule="evenodd"
+                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                        </svg> Add to library
+                                    </button>
+                                </form>
+
+                                <form class="add-book-readlist" data-type="readlist">
+                                    <input type="hidden" name="title" value="{{ book.title }}">
+                                    <input type="hidden" name="author"
+                                        value="{% if book.authors|length == 0 %}Unknown{% else %}{{ book.authors[0] }}{% endif %}">
+                                    <input type="hidden" name="isbn" value="{{ book.isbn }}">
+                                    <input type="hidden" name="genre" value="{{ book.genre[0] }}">
+                                    <input type="hidden" name="image" value="{{ book.image }}">
+                                    <button type="submit" class="btn btn-success"
+                                        style="align-items: center; align-content: center;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"
+                                            style="transform: translateY(-2px);">
+                                            <path fill-rule="evenodd"
+                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                        </svg> Add to readlist
+                                    </button>
+                                </form>
+                            </div>
+                            <p class="alert" role="alert" style="display: none; margin-top: 5px;">Book
+                                added successfully!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/static/dashboard.js"></script>
+
+{% endblock %}
