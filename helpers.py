@@ -232,7 +232,7 @@ def best_sellers():
                 isbn = volume_info.get('industryIdentifiers', [])
                 id = item['id']
                 book['id'] = id
-                book['image'] = get_image_by_id(id)
+                book['image'] = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
 
                 authors = volume_info.get('authors')
                 book['authors'] = authors
