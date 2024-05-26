@@ -12,6 +12,11 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Welcome_magic';
+    src: url(/static/Welcome\ Magic.otf);
+}
+
 #customh1 {
     font-family: Eastwood;
     letter-spacing: 1px;
@@ -149,4 +154,45 @@
 
 .logged-in {
     margin-top: 80px;
+}
+
+.custom-table {
+    background-color: transparent;
+    --bs-table-bg: transparent;
+}
+
+.custom-table th, .custom-table td {
+    border-right: none !important;
+    border-left: none !important;
+}
+
+.custom-table thead th {
+    border-bottom: 2px solid var(--bs-border-color);
+}
+
+.custom-table tbody td, .custom-table tbody th {
+    border-top: 1px solid var(--bs-border-color);
+}
+
+.custom-table {
+    border: 1px solid var(--bs-border-color);
+    background-color: transparent; 
+    --bs-table-bg: transparent;
+    font-size: 1.1rem;
+}
+
+.custom-table tbody td, .custom-table tbody th {
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.custom-table thead th {
+    color: #000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.index {
+    font-family: Welcome_magic;
 }
