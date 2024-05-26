@@ -1,8 +1,8 @@
 @font-face {
     font-family: 'Eastwood';
     src: url("/static/Eastwood.woff2");
-    /* font-weight: normal;
-    font-style: normal; */
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
@@ -15,6 +15,14 @@
 @font-face {
     font-family: 'Welcome_magic';
     src: url(/static/Welcome\ Magic.otf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: linear-gradient(135deg, #bdc3c7 0%, #99a2ab 100%); 
+    background-repeat: no-repeat; 
+    background-size: contain;
 }
 
 #customh1 {
