@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_session import Session
-from helpers import get_genre_by_book, get_book_by_genre, search_books, login_required, get_book_by_isbn, best_sellers
+from helpers import get_genre_by_book, get_book_by_genre, search_books, login_required, get_book_by_isbn, best_sellers, get_book_by_authors
 from cs50 import SQL
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import timedelta
@@ -91,13 +91,21 @@ def register():
 @login_required
 def dashboard():
     user_id = session['user_id']
-    user_books = db.execute("SELECT genre FROM books WHERE user_id = ?", user_id)
+    user_books = db.execute("SELECT genre, author FROM books WHERE user_id = ?", user_id)
 
     genres = []
     for book in user_books:
         genres.append(book['genre'])
     unique_genres = list(set(genres))
-    books = get_book_by_genre(unique_genres)
+    books_genres = get_book_by_genre(unique_genres)
+
+    authors = []
+    for book in user_books:
+        authors.append(book['author'])
+    unique_authors = list(set(authors))
+    books_authors = get_book_by_authors(unique_authors)
+
+    books = books_genres + books_authors
     random.shuffle(books)
     
     unique_books = []

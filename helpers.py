@@ -82,6 +82,57 @@ def get_book_by_genre(genres):
         
     return books
 
+def get_book_by_authors(authors):
+    """this function takes a list of authors as an argument and returns a list of books by those authors."""
+    books = []    
+    for author in authors:
+            # First request to get the total number of items for the genre
+            url = f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&printType=books"
+            response = requests.get(url)
+            
+            if response.status_code == 200:
+                data = response.json()
+                total_items = data.get('totalItems', 0)
+                
+                if total_items == 0:
+                    continue
+                
+                # Calculate the number of results to request and the start index
+                results = random.randint(10, 20)
+                max_results = results if results % 2 == 0 else results + 1
+                start_index = random.randint(0, max(math.floor((total_items - max_results)/10), 0))
+                
+                # Second request to get the actual books
+                url = f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&maxResults={max_results}&printType=books&startIndex={start_index}"
+                response = requests.get(url)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    
+                    if 'items' in data:
+                        for item in data['items']:
+                            volume_info = item['volumeInfo']
+                            book = {}
+
+                            title = volume_info['title']
+                            book['title'] = title
+                            book['image'] = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+                            book['id'] = item['id']
+                            book['authors'] = volume_info.get('authors', [])
+                            book['genre'] = volume_info.get('categories', [])
+                            isbn = volume_info.get('industryIdentifiers', [])
+                            if isbn:
+                                isbn = isbn[0].get('identifier')
+                                book['isbn'] = isbn
+                            else:
+                                book['isbn'] = None
+                            
+                            books.append(book)
+            else:
+                return f"Error: {response.status_code}"
+        
+    return books
+
 
 def get_book_by_isbn(isbn):
     """this function takes an ISBN as an argument and returns the title, author(s), and description of the book."""
@@ -250,6 +301,7 @@ def best_sellers():
         return books, length
     else:
         return f"Error: {response.status_code}"
+
 
 
 def login_required(f):
