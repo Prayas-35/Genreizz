@@ -219,7 +219,7 @@ body {
 }
 
 #book-card {
-    height: 11.5rem; 
+    min-height: 11.5rem; 
     background-color: transparent; 
-    max-height: max-content;
+    max-height: fit-content;
 }
