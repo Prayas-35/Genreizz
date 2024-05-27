@@ -24,7 +24,7 @@
     {% endif %}
 
     {% if session["user_id"] %}
-    <nav class="navbar navbar-dark fixed-top" style="border-bottom: 1px solid whitesmoke; backdrop-filter: blur(10px); min-height: 80px;">
+    <nav class="navbar navbar-dark fixed-top" id="navlogin">
         <div class="container-fluid ps-5 pe-5">
             <a class="navbar-brand" href="#">
                 <img src="static/logo.png" alt="Genreizz" width="53" height="53">
@@ -61,7 +61,7 @@
         </div>
     </nav>
     {% else %}
-    <nav class="navbar navbar-expand-lg ps-5" style="border-bottom: 1px solid whitesmoke; backdrop-filter: blur(10px); min-height: fit-content;">
+    <nav class="navbar navbar-expand-lg ps-5" id="navlogedout">
         <div class="container-fluid">
             <a class="navbar-brand" href="/login">
                 <img src="static/logo.png" alt="Genreizz" width="53" height="53">
