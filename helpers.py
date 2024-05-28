@@ -1,6 +1,6 @@
 import requests
 from functools import wraps
-from flask import session, redirect
+from flask import session, redirect, Flask
 import random
 import math
 
@@ -31,7 +31,7 @@ def get_genre_by_book(title):
         return f"Error: {response.status_code}"
 
 
-def get_book_by_genre(genres):
+def get_books_by_genre(genres):
     """this function takes a list of genre as an argument and returns a list of books in that genre."""
     books = []    
     for genre in genres:
@@ -82,7 +82,7 @@ def get_book_by_genre(genres):
         
     return books
 
-def get_book_by_authors(authors):
+def get_books_by_authors(authors):
     """this function takes a list of authors as an argument and returns a list of books by those authors."""
     books = []    
     for author in authors:
@@ -132,35 +132,6 @@ def get_book_by_authors(authors):
                 return f"Error: {response.status_code}"
         
     return books
-
-
-def get_book_by_isbn(isbn):
-    """this function takes an ISBN as an argument and returns the title, author(s), and description of the book."""
-
-    url = f"https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}"
-
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        data = response.json()
-        if 'items' in data:
-            book_info = data['items'][0]
-            volume_info = book_info['volumeInfo']
-            book = {}
-
-            title = volume_info['title']
-            book['title'] = title
-            authors = volume_info.get('authors')
-            # for author in authors:
-            #     book['authors'] = author
-            book['authors'] = authors
-            # description = volume_info.get('description', "")
-            # book['description'] = description
-            return book
-        else:
-            return "No items found for the given ISBN."
-    else:
-        return f"Error: {response.status_code}"
 
 
 def search_books(query):

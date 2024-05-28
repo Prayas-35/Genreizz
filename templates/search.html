@@ -5,6 +5,7 @@
 
 {% block main %}
 
+{% if books %}
 {% if books.0.code == 400 %}
 <h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">{{ books.0.message }}</h1>
 {% else %}
@@ -73,6 +74,10 @@
     </div>
 </div>
 
+{% endif %}
+
+{% else %}
+<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">Missing Book Name</h1>
 {% endif %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
