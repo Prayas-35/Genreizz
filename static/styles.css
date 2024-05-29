@@ -195,10 +195,19 @@ body {
     vertical-align: middle;
 }
 
+.custom-table .mybooks {
+    width: 8%;
+}
+
 .custom-table thead th {
     color: #000;
     text-align: center;
     vertical-align: middle;
+}
+
+.image_db {
+    height: 10rem; 
+    width: 7rem
 }
 
 .index {

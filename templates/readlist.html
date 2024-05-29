@@ -16,6 +16,7 @@
     <thead>
       <tr>
         <th scope="col" class="index">#</th>
+        <th scope="col"></th>
         <th scope="col">Title</th>
         <th scope="col">Author</th>
         <th scope="col"></th>
@@ -26,9 +27,10 @@
     {% for book in books %}
       <tr>
         <th scope="row" class="index">{{ loop.index }}</th>
+        <td style="width: 135.9px;" class="ps-4"><img class="image_db" src="{{ book.image }}"></td>
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
-        <td>
+        <td style="width: 105.7px;" class="pe-5">
             <form action="/delete_readlist/{{ book.id }}" method="post">
                 <button type="submit" class="btn btn-danger">Remove</button>
             </form>
