@@ -220,6 +220,6 @@ body {
 
 #book-card {
     min-height: 11.5rem; 
-    background-color: transparent; 
+    background-color: transparent;
     max-height: fit-content;
 }
