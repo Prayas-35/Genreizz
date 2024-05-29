@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_session import Session
-from helpers import get_books_by_genre, search_books, login_required, best_sellers, get_books_by_authors
+from helpers import search_books, login_required, best_sellers, fetch_books
 from cs50 import SQL
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import timedelta
 import random
-from flask_caching import Cache
+import asyncio
 
 
 app = Flask(__name__)
@@ -16,10 +16,6 @@ Session(app)
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQL("sqlite:///genreizz.db")
-
-app.config['CACHE_TYPE'] = 'simple'  # Use SimpleCache backend
-app.config['CACHE_DEFAULT_TIMEOUT'] = 30  # Cache timeout in seconds (e.g., 5 minutes)
-cache = Cache(app)
 
 @app.after_request
 def after_request(response):
@@ -95,7 +91,6 @@ def register():
 
 @app.route('/dashboard')
 @login_required
-@cache.cached()
 def dashboard():
     user_id = session['user_id']
     user_books = db.execute("SELECT genre, author FROM books WHERE user_id = ?", user_id)
@@ -104,13 +99,13 @@ def dashboard():
     for book in user_books:
         genres.append(book['genre'])
     unique_genres = list(set(genres))
-    books_genres = get_books_by_genre(unique_genres)
 
     authors = []
     for book in user_books:
         authors.append(book['author'])
     unique_authors = list(set(authors))
-    books_authors = get_books_by_authors(unique_authors)
+
+    books_genres, books_authors = asyncio.run(fetch_books(unique_genres, unique_authors))
 
     books = books_genres + books_authors
     random.shuffle(books)

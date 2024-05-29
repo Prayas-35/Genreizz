@@ -1,5 +1,5 @@
+aiohttp==3.9.3
 cs50==9.2.5
 Flask==2.3.2
-Flask_Caching==2.3.0
-Requests==2.32.2
+Requests==2.32.3
 Werkzeug==2.3.6

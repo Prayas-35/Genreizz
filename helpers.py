@@ -3,6 +3,8 @@ from functools import wraps
 from flask import session, redirect, Flask
 import random
 import math
+import asyncio
+import aiohttp
 
 def get_genre_by_book(title):
     """this function takes a book title as an argument and returns the genre of the book."""
@@ -30,107 +32,105 @@ def get_genre_by_book(title):
     else:
         return f"Error: {response.status_code}"
 
+async def fetch_books(unique_genres, unique_authors):
+    books_genres_task = get_books_by_genre(unique_genres)
+    books_authors_task = get_books_by_authors(unique_authors)
+    
+    books_genres, books_authors = await asyncio.gather(books_genres_task, books_authors_task)
+    
+    return books_genres, books_authors
 
-def get_books_by_genre(genres):
-    """this function takes a list of genre as an argument and returns a list of books in that genre."""
-    books = []    
-    for genre in genres:
-            # First request to get the total number of items for the genre
+
+async def fetch(session, url):
+    async with session.get(url) as response:
+        if response.status == 200:
+            return await response.json()
+        else:
+            return {"error": response.status}
+
+
+async def get_books_by_genre(genres):
+    """This function takes a list of genres as an argument and returns a list of books in that genre."""
+    books = []
+
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for genre in genres:
             url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&printType=books"
-            response = requests.get(url)
-            
-            if response.status_code == 200:
-                data = response.json()
-                total_items = data.get('totalItems', 0)
-                
-                if total_items == 0:
-                    continue
-                
-                # Calculate the number of results to request and the start index
-                results = random.randint(10, 20)
-                max_results = results if results % 2 == 0 else results + 1
-                start_index = random.randint(0, max(math.floor((total_items - max_results)/10), 0))
-                
-                # Second request to get the actual books
-                url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults={max_results}&printType=books&startIndex={start_index}"
-                response = requests.get(url)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    
-                    if 'items' in data:
-                        for item in data['items']:
-                            volume_info = item['volumeInfo']
-                            book = {}
+            tasks.append(fetch(session, url))
 
-                            title = volume_info['title']
-                            book['title'] = title
-                            book['image'] = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
-                            book['id'] = item['id']
-                            book['authors'] = volume_info.get('authors', [])
-                            book['genre'] = volume_info.get('categories', [])
-                            isbn = volume_info.get('industryIdentifiers', [])
-                            if isbn:
-                                isbn = isbn[0].get('identifier')
-                                book['isbn'] = isbn
-                            else:
-                                book['isbn'] = None
-                            
-                            books.append(book)
-            else:
-                return f"Error: {response.status_code}"
-        
+        responses = await asyncio.gather(*tasks)
+
+        for response, genre in zip(responses, genres):
+            if "error" in response:
+                continue
+
+            total_items = response.get('totalItems', 0)
+            if total_items == 0:
+                continue
+
+            results = random.randint(10, 20)
+            max_results = results if results % 2 == 0 else results + 1
+            start_index = random.randint(0, max(math.floor((total_items - max_results) / 10), 0))
+
+            url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults={max_results}&printType=books&startIndex={start_index}"
+            second_response = await fetch(session, url)
+
+            if 'items' in second_response:
+                for item in second_response['items']:
+                    volume_info = item['volumeInfo']
+                    book = {
+                        'title': volume_info['title'],
+                        'image': volume_info.get('imageLinks', {}).get('thumbnail', "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"),
+                        'id': item['id'],
+                        'authors': volume_info.get('authors', []),
+                        'genre': volume_info.get('categories', []),
+                        'isbn': next((identifier['identifier'] for identifier in volume_info.get('industryIdentifiers', [])), None)
+                    }
+                    books.append(book)
+
     return books
 
-def get_books_by_authors(authors):
-    """this function takes a list of authors as an argument and returns a list of books by those authors."""
-    books = []    
-    for author in authors:
-            # First request to get the total number of items for the genre
-            url = f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&printType=books"
-            response = requests.get(url)
-            
-            if response.status_code == 200:
-                data = response.json()
-                total_items = data.get('totalItems', 0)
-                
-                if total_items == 0:
-                    continue
-                
-                # Calculate the number of results to request and the start index
-                results = random.randint(10, 20)
-                max_results = results if results % 2 == 0 else results + 1
-                start_index = random.randint(0, max(math.floor((total_items - max_results)/10), 0))
-                
-                # Second request to get the actual books
-                url = f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&maxResults={max_results}&printType=books&startIndex={start_index}"
-                response = requests.get(url)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    
-                    if 'items' in data:
-                        for item in data['items']:
-                            volume_info = item['volumeInfo']
-                            book = {}
+async def get_books_by_authors(authors):
+    """This function takes a list of authors as an argument and returns a list of books by those authors."""
+    books = []
 
-                            title = volume_info['title']
-                            book['title'] = title
-                            book['image'] = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
-                            book['id'] = item['id']
-                            book['authors'] = volume_info.get('authors', [])
-                            book['genre'] = volume_info.get('categories', [])
-                            isbn = volume_info.get('industryIdentifiers', [])
-                            if isbn:
-                                isbn = isbn[0].get('identifier')
-                                book['isbn'] = isbn
-                            else:
-                                book['isbn'] = None
-                            
-                            books.append(book)
-            else:
-                return f"Error: {response.status_code}"
-        
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for author in authors:
+            url = f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&printType=books"
+            tasks.append(fetch(session, url))
+
+        responses = await asyncio.gather(*tasks)
+
+        for response, author in zip(responses, authors):
+            if "error" in response:
+                continue
+
+            total_items = response.get('totalItems', 0)
+            if total_items == 0:
+                continue
+
+            results = random.randint(10, 20)
+            max_results = results if results % 2 == 0 else results + 1
+            start_index = random.randint(0, max(math.floor((total_items - max_results) / 10), 0))
+
+            url = f"https://www.googleapis.com/books/v1/volumes?q=inauthor:{author}&maxResults={max_results}&printType=books&startIndex={start_index}"
+            second_response = await fetch(session, url)
+
+            if 'items' in second_response:
+                for item in second_response['items']:
+                    volume_info = item['volumeInfo']
+                    book = {
+                        'title': volume_info['title'],
+                        'image': volume_info.get('imageLinks', {}).get('thumbnail', "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"),
+                        'id': item['id'],
+                        'authors': volume_info.get('authors', []),
+                        'genre': volume_info.get('categories', []),
+                        'isbn': next((identifier['identifier'] for identifier in volume_info.get('industryIdentifiers', [])), None)
+                    }
+                    books.append(book)
+
     return books
 
 
