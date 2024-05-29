@@ -1,6 +1,6 @@
 import requests
 from functools import wraps
-from flask import session, redirect, Flask
+from flask import session, redirect
 import random
 import math
 import asyncio
@@ -52,7 +52,7 @@ async def fetch(session, url):
 async def get_books_by_genre(genres):
     """This function takes a list of genres as an argument and returns a list of books in that genre."""
     books = []
-
+    print("getting books by genre")
     async with aiohttp.ClientSession() as session:
         tasks = []
         for genre in genres:
@@ -88,13 +88,13 @@ async def get_books_by_genre(genres):
                         'isbn': next((identifier['identifier'] for identifier in volume_info.get('industryIdentifiers', [])), None)
                     }
                     books.append(book)
-
+    print("got books by genre")
     return books
 
 async def get_books_by_authors(authors):
     """This function takes a list of authors as an argument and returns a list of books by those authors."""
     books = []
-
+    print("getting books by authors")
     async with aiohttp.ClientSession() as session:
         tasks = []
         for author in authors:
@@ -130,7 +130,7 @@ async def get_books_by_authors(authors):
                         'isbn': next((identifier['identifier'] for identifier in volume_info.get('industryIdentifiers', [])), None)
                     }
                     books.append(book)
-
+    print("got books by authors")
     return books
 
 
