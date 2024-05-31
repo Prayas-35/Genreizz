@@ -1,13 +1,16 @@
 $(document).ready(function() {
     // Function to show the spinner
     function showSpinner() {
+        $('#navlogin').css('visibility', 'hidden');
+        $('#searchbtn').css('visibility', 'hidden');
         $('.spinner-wrapper').css('opacity', '1');
         $('.spinner-wrapper').css('visibility', 'visible');
-        $('#navlogin').css('visibility', 'hidden');
     }
 
     // Function to hide the spinner
     function hideSpinner() {
+        $('#navlogin').css('visibility', 'visible');
+        $('#searchbtn').css('visibility', 'visible');
         $('.spinner-wrapper').css('opacity', '0');
         $('.spinner-wrapper').css('visibility', 'hidden');
     }

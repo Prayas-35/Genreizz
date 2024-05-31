@@ -15,10 +15,9 @@
     <div class="row">
         {% for book in books %}
         <div class="col-md-6 mb-3">
-            <div class="card shadow rounded mb-3 ps-0"
-                style="height: 11.5rem; background-color: transparent; max-height: max-content;">
+            <div class="card shadow rounded mb-3 ps-0" id="book-card">
                 <div class="row g-0" style="height: 100%;">
-                    <div class="col-md-4 pe-5" style="height: 100%; width: fit-content;">
+                    <div class="col-md-4 pe-5" style="height: 11.5rem; width: fit-content; vertical-align: middle;">
                         <img src="{{ book.image }}" class="img-fluid rounded-start" style="height: 100%; width: 9rem;">
                     </div>
                     <div class="col-md-8">
