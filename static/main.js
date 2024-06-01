@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Function to show the spinner
     function showSpinner() {
         $('#navlogin').css('visibility', 'hidden');
@@ -16,35 +16,35 @@ $(document).ready(function() {
     }
 
     // Show the spinner when the page is loading
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         hideSpinner();
     });
 
     // Show the spinner when the document is loading
-    $(document).ajaxStart(function() {
+    $(document).ajaxStart(function () {
         showSpinner();
     });
 
     // Hide the spinner when the document has finished loading
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         hideSpinner();
     });
 
     // Example of triggering the spinner manually
-    $('form').on('submit', function(event) {
+    $('form').on('submit', function (event) {
         showSpinner();
     });
 
     // Show the spinner when the page is reloading
-    $(window).on('beforeunload', function() {
+    $(window).on('beforeunload', function () {
         showSpinner();
     });
 
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
             $('#scrollToTopBtn').fadeIn();
         } else {
@@ -52,7 +52,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#scrollToTopBtn').click(function() {
+    $('#scrollToTopBtn').click(function () {
         $('html, body').animate({
             scrollTop: 0
         }, 'slow');
@@ -60,8 +60,8 @@ $(document).ready(function() {
     });
 })
 
-$(document).ready(function() {
-    $('#password').keyup(function() {
+$(document).ready(function () {
+    $('#password').keyup(function () {
         if ($('#password').val() == '') {
             $('#eye').css('visibility', 'hidden');
         } else {
@@ -70,7 +70,7 @@ $(document).ready(function() {
     });
 
     // Add click event listener to #eye element
-    $('#eye').click(function() {
+    $('#eye').click(function () {
         if ($('#password').attr('type') == 'password') {
             $('#password').attr('type', 'text');
             $('#eye').removeClass('fa-eye').addClass('fa-eye-slash');
