@@ -59,3 +59,24 @@ $(document).ready(function() {
         return false;
     });
 })
+
+$(document).ready(function() {
+    $('#password').keyup(function() {
+        if ($('#password').val() == '') {
+            $('#eye').css('visibility', 'hidden');
+        } else {
+            $('#eye').css('visibility', 'visible');
+        }
+    });
+
+    // Add click event listener to #eye element
+    $('#eye').click(function() {
+        if ($('#password').attr('type') == 'password') {
+            $('#password').attr('type', 'text');
+            $('#eye').removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+            $('#password').attr('type', 'password');
+            $('#eye').removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+    });
+});

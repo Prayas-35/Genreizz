@@ -481,3 +481,11 @@ body {
     background-color: yellow;
     color: black;
 }
+
+#eye {
+    position: absolute; 
+    transform: translateX(4.4rem) translateY(-2.3rem); 
+    cursor: pointer;
+    color: white;
+    visibility: hidden;
+}
