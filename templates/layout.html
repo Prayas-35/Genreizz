@@ -10,15 +10,14 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="static/logo.png" type="image/png">
     <link rel="stylesheet" href="/static/styles.css">
     <title>Genreizz{% block title %}{% endblock %}</title>
 </head>
 
 <body>
-
     {% if alert %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         {{ alert }}
@@ -70,7 +69,8 @@
             </div>
         </div>
     </nav>
-    <button id="scrollToTopBtn"><i class="fa-solid fa-angle-up fa-lg"></i></button>
+    <button id="scrollToTopBtn" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-title="Back to top"><i class="fa-solid fa-angle-up fa-lg"></i></button>
 
     {% else %}
     <nav class="navbar navbar-expand-lg ps-5" id="navlogedout">

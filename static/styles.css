@@ -489,3 +489,10 @@ body {
     color: white;
     visibility: hidden;
 }
+
+.custom-tooltip {
+    position: fixed;
+    border-radius: 10px;
+    border: 3px solid #DAA520;
+    color: yellow;
+}
