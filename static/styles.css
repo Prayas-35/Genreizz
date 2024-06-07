@@ -306,8 +306,8 @@ body {
 }
 
 :root {
-    --color: #fff;
-    --background: #DAA520;
+    --color: #DAA520;
+    --background: transparent;
     --duration: 6.8s;
 }
 
