@@ -28,7 +28,7 @@ def after_request(response):
 @app.route("/")
 def index():
     if session.permanent:
-        return redirect('/dashboard')
+        return redirect('/bestsellers')
 
     return redirect('/login')
 
@@ -36,7 +36,7 @@ def index():
 def login():
     if request.method == 'GET':
         if session.permanent:
-            return redirect('/dashboard')
+            return redirect('/bestsellers')
         
         else:
             return render_template('login.html')
@@ -52,7 +52,7 @@ def login():
                 if check_password_hash(user[0]['password'], password):
                     session['user_id'] = user[0]['user_id']
                     session.permanent = True
-                    return redirect('/dashboard')
+                    return redirect('/bestsellers')
             
                 else:
                     alert = "Incorrect username or password!"
@@ -85,11 +85,11 @@ def register():
         id = db.execute("SELECT user_id FROM users WHERE username = ?", username)
         session['user_id'] = id[0]['user_id']
         session.permanent = True
-        return redirect('/dashboard')
+        return redirect('/bestsellers')
     
     return render_template("signup.html")
 
-@app.route('/dashboard')
+@app.route('/recommendations')
 @login_required
 def dashboard():
     user_id = session['user_id']
@@ -196,9 +196,15 @@ def delete_read(id):
 @app.route('/bestsellers')
 @login_required
 def bestsellers():
-    books = best_sellers()
-    return books
-    return render_template('bestsellers.html', books=books)
+    bestbooks = best_sellers()
+    random.shuffle(bestbooks)
+    unique_books = []
+    seen_ids = set()
+    for book in bestbooks:
+        if book['id'] not in seen_ids:
+            unique_books.append(book)
+            seen_ids.add(book['id'])
+    return render_template('bestsellers.html', books=unique_books, length=len(bestbooks))
 
 @app.route('/account')
 @login_required

@@ -255,8 +255,9 @@ def best_sellers():
                 id = item['id']
                 book['id'] = id
                 book['image'] = volume_info['imageLinks']['thumbnail'] if 'imageLinks' in volume_info else "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+                book['genre'] = volume_info.get('categories', [])
 
-                authors = volume_info.get('authors')
+                authors = volume_info.get('authors') if 'authors' in volume_info else []
                 book['authors'] = authors
 
                 if isbn:
@@ -268,10 +269,7 @@ def best_sellers():
                 
                 books.append(book)
 
-        length = len(books)
-        return books, length
-    else:
-        return f"Error: {response.status_code}"
+        return books
 
 
 

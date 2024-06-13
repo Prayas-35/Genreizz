@@ -881,3 +881,9 @@ body {
         transform: rotateZ(-90deg);
     }
 }
+
+#addalert {
+    display: none; 
+    margin-top: 5px; 
+    position: relative;
+}

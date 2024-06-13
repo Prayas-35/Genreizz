@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
 
-{% block title %}: Recommendations
+{% block title %}: Best Sellers
 {% endblock %}
 
 {% block main %}
 
 {% if length == 0 %}
-<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">Add Books To Your Library To Get
-    Recommendations</h1>
+<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">No Best Sellers</h1>
 {% else %}
 
-<h1 class="mb-5" id="customh1">Recommended Books</h1>
+<h1 class="mb-5" id="customh1">Best Sellers</h1>
 <div class="container">
     <div class="row">
         {% for book in books %}
