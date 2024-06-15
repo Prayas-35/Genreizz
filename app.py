@@ -199,11 +199,15 @@ def bestsellers():
     bestbooks = best_sellers()
     random.shuffle(bestbooks)
     unique_books = []
+
+    seen_isbns = set()
     seen_ids = set()
     for book in bestbooks:
-        if book['id'] not in seen_ids:
+        if book['id'] not in seen_ids and book['isbn'] not in seen_isbns:
             unique_books.append(book)
             seen_ids.add(book['id'])
+            seen_isbns.add(book['isbn'])
+
     return render_template('bestsellers.html', books=unique_books, length=len(bestbooks))
 
 @app.route('/account')
