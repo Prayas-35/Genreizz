@@ -34,7 +34,7 @@
     {% if session["user_id"] %}
     <nav class="navbar navbar-dark fixed-top" id="navlogin">
         <div class="container-fluid ps-5 pe-5">
-            <a class="navbar-brand" href="/dashboard">
+            <a class="navbar-brand" href="/bestsellers">
                 <img src="static/logo.png" alt="Genreizz" width="53" height="53">
             </a>
             <form action="/search" method="post" class="d-flex" role="search">
@@ -61,7 +61,8 @@
                             <a class="nav-link active" aria-current="page" href="/bestsellers">Best Sellers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/recommendations">Get Recommendations</a>
+                            <a class="nav-link active" aria-current="page" href="/recommendations">Get
+                                Recommendations</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/mybooks">My Books</a>
