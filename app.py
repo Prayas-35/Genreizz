@@ -196,17 +196,22 @@ def delete_read(id):
 @app.route('/bestsellers')
 @login_required
 def bestsellers():
+    user_id = session["user_id"]
     bestbooks = best_sellers()
     random.shuffle(bestbooks)
     unique_books = []
 
     seen_isbns = set()
     seen_ids = set()
+    seen_authors = set()
+    seen_title = set()
     for book in bestbooks:
-        if book['id'] not in seen_ids and book['isbn'] not in seen_isbns:
+        if book['id'] not in seen_ids and book['isbn'] not in seen_isbns and book['authors'][0] not in seen_authors and book['title'] not in seen_title:
             unique_books.append(book)
             seen_ids.add(book['id'])
             seen_isbns.add(book['isbn'])
+            seen_authors.add(book['authors'][0])
+            seen_title.add(book['title'])
 
     return render_template('bestsellers.html', books=unique_books, length=len(bestbooks))
 
