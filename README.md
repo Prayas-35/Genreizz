@@ -49,6 +49,9 @@ This is the file that contains the schema of the database.
 ### ***4. genreizz.db***
 This is the database of the application that stores hashed user credentials and book information.
 
+### ***7. requirements.txt***
+This file contains the pip installable packages that must be installed before running the application.
+
 ### ***5. templates***
 The templates folder contains the html templates that are rendered using Flask in app.py
 
