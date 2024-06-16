@@ -27,6 +27,8 @@ def after_request(response):
 
 @app.route("/")
 def index():
+    '''redirects to the login page if not signed in else shows bestseller books'''
+
     if session.permanent:
         return redirect('/bestsellers')
 
@@ -34,6 +36,8 @@ def index():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    '''log users in'''
+
     if request.method == 'GET':
         if session.permanent:
             return redirect('/bestsellers')
@@ -63,6 +67,8 @@ def login():
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
+    '''register users'''
+
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
@@ -92,6 +98,8 @@ def register():
 @app.route('/recommendations')
 @login_required
 def dashboard():
+    '''gives recommendations based on users most read genres and authors'''
+
     user_id = session['user_id']
     user_books = db.execute("SELECT genre, author FROM books WHERE user_id = ?", user_id)
 
@@ -123,6 +131,8 @@ def dashboard():
 @app.route('/bookshelf')
 @login_required
 def bookshelf():
+    '''shows users books'''
+
     user_id = session['user_id']
     books = db.execute("SELECT * FROM books WHERE user_id = ?", user_id)
     return render_template('mybooks.html', books = books)
@@ -130,6 +140,8 @@ def bookshelf():
 @app.route('/search', methods=["GET", "POST"])
 @login_required
 def search():
+    '''search books on given query'''
+
     if request.method == "POST":
         query = request.form.get("query")
         books = search_books(query)
@@ -142,6 +154,8 @@ def search():
 @app.route('/add', methods=["POST"])
 @login_required
 def add_book():
+    '''adds books to bookshelf'''
+
     user_id = session['user_id']
     title = request.form.get("title")
     author = request.form.get("author")
@@ -159,6 +173,8 @@ def add_book():
     
 @app.route('/readlist')
 def readlist():
+    '''shows users readlist'''
+
     user_id = session['user_id']
     books = db.execute("SELECT * FROM readlist WHERE user_id = ?", user_id)
     return render_template('readlist.html', books = books)
@@ -166,6 +182,8 @@ def readlist():
 @app.route('/add_read', methods=["POST"])
 @login_required
 def add_book_readlist():
+    '''adds book to readlist'''
+
     user_id = session['user_id']
     title = request.form.get("title")
     author = request.form.get("author")
@@ -184,18 +202,24 @@ def add_book_readlist():
 @app.route('/delete/<int:id>', methods=["POST"])
 @login_required
 def delete_book(id):
+    '''removes book from bookshelf'''
+
     db.execute("DELETE FROM books WHERE id = ?", id)
     return redirect('/bookshelf')
 
 @app.route('/delete_readlist/<int:id>', methods=["POST"])
 @login_required
 def delete_read(id):
+    '''removes book from readlist'''
+
     db.execute("DELETE FROM readlist WHERE id = ?", id)
     return redirect('/readlist')
 
 @app.route('/bestsellers')
 @login_required
 def bestsellers():
+    '''shows best-selling books'''
+
     bestbooks = best_sellers()
     random.shuffle(bestbooks)
     unique_books = []
@@ -216,6 +240,8 @@ def bestsellers():
 
 @app.route('/logout')
 def logout():
+    '''log users out'''
+    
     session.clear()
     return redirect('/')
 

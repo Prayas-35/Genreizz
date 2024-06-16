@@ -26,6 +26,7 @@ async def fetch(session, url):
 
 async def get_books_by_genre(genres):
     """This function takes a list of genres as an argument and returns a list of books in that genre."""
+
     books = []
     print("getting books by genre")
     async with aiohttp.ClientSession() as session:
@@ -69,6 +70,7 @@ async def get_books_by_genre(genres):
 
 async def get_books_by_authors(authors):
     """This function takes a list of authors as an argument and returns a list of books by those authors."""
+
     books = []
     print("getting books by authors")
     async with aiohttp.ClientSession() as session:
@@ -113,6 +115,7 @@ async def get_books_by_authors(authors):
 
 def search_books(query):
     """this function takes a query as an argument and returns a list of books that match the query."""
+
     results = random.randint(10, 20)
     url = f"https://www.googleapis.com/books/v1/volumes?q={query}&maxResults={results if results%2 == 0 else results+1}&printType=books"
 
@@ -172,6 +175,8 @@ def search_books(query):
         return f"Error: {response.status_code}"
     
 def best_sellers():
+    '''this function returns a list of bestselling books'''
+    
     url = "https://www.googleapis.com/books/v1/volumes?q=best+sellers&orderBy=newest&langRestrict=en&maxResults=40&printType=books"
     response = requests.get(url)
 
