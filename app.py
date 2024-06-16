@@ -196,7 +196,6 @@ def delete_read(id):
 @app.route('/bestsellers')
 @login_required
 def bestsellers():
-    user_id = session["user_id"]
     bestbooks = best_sellers()
     random.shuffle(bestbooks)
     unique_books = []
@@ -214,13 +213,6 @@ def bestsellers():
             seen_title.add(book['title'])
 
     return render_template('bestsellers.html', books=unique_books, length=len(bestbooks))
-
-@app.route('/account')
-@login_required
-def account():
-    user_id = session['user_id']
-    user = db.execute("SELECT * FROM users WHERE user_id = ?", user_id)
-    return render_template('account.html', user = user)
 
 @app.route('/logout')
 def logout():
