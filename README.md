@@ -56,5 +56,5 @@ The templates folder contains the html templates that are rendered using Flask i
 The static folder contains all the static files like the `CSS` file, `Font` files, `JavaScript` files, `favicon` file and many more.
 
 ##
-> [!NOTE] <br>
-> All the books datas shown in this application is provided by google books API and I do not own any of these data.
+> <span style="color:blue">ℹ️ Note:</span>  
+> All the book datas shown in this application is provided by google books API and I do not own any of these data.
