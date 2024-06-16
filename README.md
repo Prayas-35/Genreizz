@@ -1,5 +1,5 @@
 # GENREIZZ
-## Video Demo:
+<!-- ## Video Demo: -->
 ## Description:
 Genreizz is a web application using Python Flask, Jinja, and SQLite that recommends books to users based on their reading history, utilizing the Google Books API for data and featuring a frontend built with HTML, CSS, JavaScript, and jQuery.
 ## Usage:
