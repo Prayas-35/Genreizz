@@ -120,9 +120,9 @@ def dashboard():
     # return unique_books
     return render_template('dashboard.html', books=unique_books, length=len(books))
 
-@app.route('/mybooks')
+@app.route('/bookshelf')
 @login_required
-def mybooks():
+def bookshelf():
     user_id = session['user_id']
     books = db.execute("SELECT * FROM books WHERE user_id = ?", user_id)
     return render_template('mybooks.html', books = books)
@@ -185,7 +185,7 @@ def add_book_readlist():
 @login_required
 def delete_book(id):
     db.execute("DELETE FROM books WHERE id = ?", id)
-    return redirect('/mybooks')
+    return redirect('/bookshelf')
 
 @app.route('/delete_readlist/<int:id>', methods=["POST"])
 @login_required
