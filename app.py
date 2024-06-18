@@ -81,10 +81,10 @@ def register():
         users = db.execute("SELECT username, email FROM users")
 
         for user in users:
-            if username in user['username']:
+            if username == user['username']:
                 return render_template('signup.html', alert = "Username already exists. Try a different username.") #to add a msg if username already exists
             
-            elif email in user['email']:
+            elif email == user['email']:
                 return render_template('signup.html', alert = "The account already exists with this email.") #to add a msg if email already exists
             
         db.execute("INSERT INTO users (username, email, password) VALUES(?, ?, ?)", username, email, password)

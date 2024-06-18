@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
-{% block title %}: My books
+{% block title %}: Bookshelf
 {% endblock %}
 
 {% block main %}
 
 {% if books|length == 0 %}
 
-<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">You Have No Books In Your Library</h1>
+<h1 class="position-absolute top-50 start-50 translate-middle" id="customh1">You Have No Books In Your Bookshelf</h1>
 
 {% else %}
 <h1 class="mb-5" id="customh1">Bookshelf</h1>
