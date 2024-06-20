@@ -47,8 +47,8 @@ async def get_books_by_genre(genres):
 
             results = random.randint(10, 20)
             max_results = results if results % 2 == 0 else results + 1
-            # start_index = random.randint(0, max(math.floor((total_items - max_results) / 10), 0))
-            start_index = random.randint(0,10)
+            start_index = random.randint(0, max(math.floor((total_items - max_results) / 10), 0))
+            # start_index = random.randint(0,10)
 
             url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults={max_results}&printType=books&startIndex={start_index}"
             second_response = await fetch(session, url)
