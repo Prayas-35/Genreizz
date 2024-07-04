@@ -179,4 +179,5 @@ pyrightconfig.json
 *.sqlite3
 *.sqlite
 *.db
+# /home/prayas35/genreizz/genreizz.db
 # End of https://www.toptal.com/developers/gitignore/api/python
