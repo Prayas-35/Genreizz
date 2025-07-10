@@ -229,11 +229,18 @@ def bestsellers():
     seen_authors = set()
     seen_title = set()
     for book in bestbooks:
-        if book['id'] not in seen_ids and book['isbn'] not in seen_isbns and book['authors'][0] not in seen_authors and book['title'] not in seen_title:
+        author = book['authors'][0] if book.get('authors') and len(book['authors']) > 0 else None
+        if (
+            book['id'] not in seen_ids and
+            book['isbn'] not in seen_isbns and
+            author is not None and
+            author not in seen_authors and
+            book['title'] not in seen_title
+        ):
             unique_books.append(book)
             seen_ids.add(book['id'])
             seen_isbns.add(book['isbn'])
-            seen_authors.add(book['authors'][0])
+            seen_authors.add(author)
             seen_title.add(book['title'])
 
     return render_template('bestsellers.html', books=unique_books, length=len(bestbooks))
